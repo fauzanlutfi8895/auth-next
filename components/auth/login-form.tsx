@@ -41,25 +41,23 @@ export const LoginForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      login(values)
-        .then(data => {
-          if (data?.error) {
-            if (!values.code) {
-              form.reset();
-            }
-            setError(data.error);
-          }
-
-          if (data?.success) {
+      login(values).then(data => {
+        if (data?.error) {
+          if (!values.code) {
             form.reset();
-            setSuccess(data.success);
           }
+          setError(data.error);
+        }
 
-          if (data?.twoFactor) {
-            setShowTwoFactor(true);
-          }
-        })
-        .catch(() => setError("Wleeee"));
+        if (data?.success) {
+          form.reset();
+          setSuccess(data.success);
+        }
+
+        if (data?.twoFactor) {
+          setShowTwoFactor(true);
+        }
+      });
     });
   };
 
