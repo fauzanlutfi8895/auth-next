@@ -10,7 +10,6 @@ const SettingLayout = async ({ children }: { children: React.ReactNode }) => {
         <Navbar />
         {children}
       </SessionProvider>
-      ;
     </div>
   );
 };
