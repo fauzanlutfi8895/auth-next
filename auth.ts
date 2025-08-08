@@ -7,7 +7,12 @@ import { getUserById } from "@/data/user";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 import { UserRole } from "@prisma/client";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+} = NextAuth({
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
@@ -19,6 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         data: { emailVerified: new Date() },
       });
     },
+    async signOut() {},
   },
   callbacks: {
     async signIn({ user, account }) {
@@ -32,7 +38,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       //2FA check
       if (existingUser.isTwoFactorEnabled) {
-
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
 
         if (!twoFactorConfirmation) return false;
